@@ -29,8 +29,8 @@ $cf push cyperweb --no-manifest --no-start -p ./cyperweb.war
 $cf start cyperweb
 
 ```
-###Pitfalls
-a. `Don't use below maven archetects in Eclipse JEE, they are meant for RAD.`
+###Maven
+#####a. Don't use below maven archetects in Eclipse JEE, they are meant for RAD.
 
 * webapp-jee5-was
 * webapp-jee5-liberty
@@ -38,12 +38,12 @@ a. `Don't use below maven archetects in Eclipse JEE, they are meant for RAD.`
 Nevertheless, use maven-archetype-webapp honestly.
 
 
-b. `Use Maven -> Updae Project..(Alt +F5) with caution!` Below error can be occurred：
+#####b. Use Maven -> Updae Project..(Alt +F5) `with caution!` Below error can be occurred：
 ```java
 [AUDIT   ] CWWKF0011I: The server DemoServer is ready to run a smarter planet.
 [ERROR   ] SRVE0293E: [Servlet Error]-[Failed to load listener: org.springframework.web.context.ContextLoaderListener]: java.lang.ClassNotFoundException: org/springframework/web/context/ContextLoaderListener
     at java.lang.Class.forName0(Native Method)
-	at java.lang.Class.forName(Class.java:190)
+    at java.lang.Class.forName(Class.java:190)
 	at com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:75)
 	at com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:110)
 	at java.beans.Beans.instantiate(Beans.java:216)
@@ -95,4 +95,54 @@ b. `Use Maven -> Updae Project..(Alt +F5) with caution!` Below error can be occu
 	</classpathentry>
 ```
 将.classpath还原！问题解决！
+
+###SQL drivers
+First you need to bind service before you start application.
+```java
+$>cf bind-service cyperweb mysql-cyper
+$>cf start cyperweb
+```
+
+Then you need to include jars for jdbc drivers, the bluemix won't provide jdbc jar for you.
+
+###Auto binding configurations
+`pom.xml`
+```xml
+    	<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>cloudfoundry-connector</artifactId>
+			<version>0.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-service-connector</artifactId>
+			<version>0.9.5</version>
+		</dependency>
+```
+`applicationContext.mxl`
+```xml
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:cloud="http://www.springframework.org/schema/cloud"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    ">
+    <cloud:data-source id="dataSource" />
+</beans>
+```
+Notice the cloud part.
+
+`    xmlns:cloud="http://www.springframework.org/schema/cloud"`
+
+and
+
+`http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd`
+
+
+
+
 

@@ -29,6 +29,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- spring configuration -->
 
 		<!-- spring jdbc -->
 		<dependency>
@@ -46,7 +47,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.9</version>
+			<version>5.1.22</version>
 		</dependency>
 
 		<!-- initialize db from file -->
@@ -60,6 +61,25 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.1</version>
 		</dependency>
+
+		<!-- integrate bluemix services -->
+		<dependency>
+			<groupId>org.cloudfoundry</groupId>
+			<artifactId>cloudfoundry-runtime</artifactId>
+			<version>0.8.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>cloudfoundry-connector</artifactId>
+			<version>0.9.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-service-connector</artifactId>
+			<version>0.9.5</version>
+		</dependency>
+
 
 	</dependencies>
 	<build>
