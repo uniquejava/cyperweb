@@ -1,7 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <html>
+<head>
+<title>Cyper's App</title>
+</head>
 <body>
-<h2>Hello <a href="<%=request.getContextPath()%>/hello">Cyper!</a></h2>
+<h3><a href="${ctx }/about">About</a></h3>
+<h3><a href="${ctx }/profile">simple CRUD</a></h3>
 </body>
 </html>
