@@ -1,0 +1,48 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    ">
+	<context:component-scan base-package="org.ccs.cyperweb.controller"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<!-- Ingore Accept Header -->
+		<property name="ignoreAcceptHeader" value="true" />
+		<!-- no extension names, ie: "/user/1" -->
+		<property name="defaultContentType" value="text/html" />
+
+		<!-- extension name to MIME type mappings, such as /user.json => application/json -->
+		<property name="mediaTypes">
+			<map>
+				<entry key="html" value="text/html" />
+				<entry key="json" value="application/json" />
+				<entry key="xml" value="application/xml" />
+			</map>
+		</property>
+		<!-- close support for /userinfo/123?format=json, I prefix .json for less 
+			key strokes -->
+		<property name="favorParameter" value="false" />
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+				<bean
+					class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+					<property name="prefix" value="/WEB-INF/jsp/"></property>
+					<property name="suffix" value=".jsp"></property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+</beans>
+
