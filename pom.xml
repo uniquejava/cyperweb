@@ -94,7 +94,14 @@
 			<version>2.3.1</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
+		<!-- jstl optional for Websphere LP but required for Tomcat 7 -->
+		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>cyperweb</finalName>

@@ -1,7 +1,8 @@
 #cyperweb
 
 Try [`http://cyperweb.ng.bluemix.net`](http://cyperweb.ng.bluemix.net) to see what this app looks like,
-you can fork this project [`here`](http://git.oschina.net/uniquejava/cyperweb).
+you can fork this project [`@github`](https://github.com/uniquejava/cyperweb)
+or [`@oschina`](http://git.oschina.net/uniquejava/cyperweb).
 ###Technique stacks
 To name but a few:
 
@@ -9,7 +10,7 @@ To name but a few:
 * Spring JDBC
 * Spring Cloud
 * Maven
-* Websphere Liberty Profile 8.5.5
+* Websphere Liberty Profile 8.5.5 or Tomcat 7
 * MySQL
 
 
@@ -19,6 +20,10 @@ You can either install `cloud foundry` plugin from
 Eclipse marketplace, or you can use cloud foundry CLI like this:
 ```shell
 $cf login -a https://api.ng.bluemix.net
+API endpoint: https://api.ng.bluemix.net
+
+Username> your username
+Password> your password
 
 $cf create-service mysql 100 mysql-cyper
 
@@ -32,6 +37,11 @@ $cf start cyperweb
 
 ```
 ###Maven
+You can use below command to generate a war package for bluemix.
+```shell
+mvn clean package
+```
+the generated file will be `cyperweb.war` for this project. Be careful when you are using maven eclipse plug-in.
 #####a. Don't use below maven archetects in Eclipse JEE, they are meant for RAD.
 
 * webapp-jee5-was
@@ -40,14 +50,14 @@ $cf start cyperweb
 Nevertheless, use maven-archetype-webapp honestly.
 
 
-#####b. Use Maven -> Updae Project..(Alt +F5) `with caution!` Below error can be occurred：
+#####b. Use Maven -> Update Project..(Alt +F5) `with caution!` Below error can be occurred：
 ```java
 [AUDIT   ] CWWKF0011I: The server DemoServer is ready to run a smarter planet.
 [ERROR   ] SRVE0293E: [Servlet Error]-[Failed to load listener: org.springframework.web.context.ContextLoaderListener]: java.lang.ClassNotFoundException: org/springframework/web/context/ContextLoaderListener
     at java.lang.Class.forName0(Native Method)
     at java.lang.Class.forName(Class.java:190)
     at com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:75)
-	at com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:110)
+    at com.sun.beans.finder.ClassFinder.findClass(ClassFinder.java:110)
 	at java.beans.Beans.instantiate(Beans.java:216)
 	at java.beans.Beans.instantiate(Beans.java:80)
 	at com.ibm.ws.webcontainer.webapp.WebApp.loadListener(WebApp.java:2184)
@@ -99,7 +109,25 @@ to
 After I revert the changes in .classpath, the issue is resolved.
 
 
-###Auto binding configurations
+###Auto rebind configurations
+You don't need to do anything if you are using spring framework and
+you already have below piece of configuration done there.
+```xml
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${jdbc.driverClassName}" />
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+	</bean>
+```
+Because spring framework has a built-in support for cloud and is smart enough to auto 
+re-configure your file, it will automatically bind the environment service to this dataSource
+and will ignore any your configurations here given that you only have one RDBMS service bind to
+your application.
+
+However, if you want more fine control over your application, you can do below things.
+
  `pom.xml` for maven.
 ```xml
     	<dependency>
@@ -134,10 +162,10 @@ Notice the new cloud declaration,
 and
 *http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd*
 
-BTW, `service-name` is optional if there is only one RDBMS service bind to this app.
+BTW, again, `service-name` is optional if there is only one RDBMS service bind to this app.
 
 ###Odds and ends
-1. You need to bind mysql service before you start application the first time.
+1. You need to bind mysql service before you start application for the first time.
 * You must include jars for jdbc drivers, the bluemix won't provide jdbc drivers for you.
 
 
