@@ -5,9 +5,21 @@
 <html>
 <head>
 <title>Cyper's App</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link href="${ctx }/css/bootstrap.css" rel="stylesheet">
+<link href="${ctx }/css/bootstrap-responsive.css" rel="stylesheet">
 </head>
 <body>
-<h3><a href="${ctx }/about">About</a></h3>
-<h3><a href="${ctx }/profile">simple CRUD</a></h3>
+	<div class="container">
+		<div class="hero-unit">
+			<h1>Hello, Bluemix!</h1>
+			<p>This is a simple Spring CRUD demo deployed on bluemix.</p>
+			<p>
+				<a href="${ctx }/profile" class="btn btn-primary btn-large">Learn
+					more</a>
+			</p>
+		</div>
+	</div>
 </body>
 </html>
