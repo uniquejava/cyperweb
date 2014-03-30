@@ -7,7 +7,7 @@ or [`@oschina`](http://git.oschina.net/uniquejava/cyperweb).
 To name but a few:
 
 1. Spring MVC
-* Spring JDBC
+* Spring JDBC + OpenJPA
 * Spring Cloud
 * Maven
 * Websphere Liberty Profile 8.5.5 or Tomcat 7

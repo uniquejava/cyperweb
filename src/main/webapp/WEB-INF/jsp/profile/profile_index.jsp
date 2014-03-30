@@ -100,9 +100,9 @@
 		<a href="#relation-menu" class="nav-header" data-toggle="collapse">
 		<i class="icon-beaker"></i>Relationship<span class="label label-info">+5</span></a>
 		<ul id="relation-menu" class="nav nav-list collapse in">
-			<li><a href="#">One2many</a></li>
-			<li><a href="#">One2one</a></li>
 			<li><a href="#">Many2one</a></li>
+			<li><a href="#">One2one</a></li>
+			<li><a href="#">One2many</a></li>
 			<li><a href="#">Many2many</a></li>
 			<li><a href="#">Recursive</a></li>
 

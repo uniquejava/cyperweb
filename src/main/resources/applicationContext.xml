@@ -1,12 +1,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:cloud="http://www.springframework.org/schema/cloud"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
     http://www.springframework.org/schema/cloud http://www.springframework.org/schema/cloud/spring-cloud.xsd
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
     ">
 
 
@@ -17,7 +18,8 @@
 
 	<import resource="classpath:spring-mvc.xml" />
 
-	<!-- uncomment below part is fine even in cloud environment if there is just one RDBMS service bind to this app. -->
+	<!-- uncomment below part is fine even in cloud environment if there is 
+		just one RDBMS service bind to this app. -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
@@ -32,16 +34,48 @@
 		<property name="password" value="${jdbc.password}" />
 	</bean>
 
-	<!-- comment out below line is fine even in cloud environment if there is just one RDBMS service bind to this app.-->
-<!-- 	<cloud:data-source id="dataSource" service-name="mysql-cyper" />  -->
-	
+	<!-- comment out below line is fine even in cloud environment if there is 
+		just one RDBMS service bind to this app. -->
+	<!-- <cloud:data-source id="dataSource" service-name="mysql-cyper" /> -->
+
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
 	<!-- initialize db -->
-	<bean class="org.ccs.cyperweb.init.DbInitializer"
-		init-method="init" />
+	<bean class="org.ccs.cyperweb.init.DbInitializer" init-method="init" />
+
+
+	<!-- Spring JPA -->
+	<!-- method 1 -->
+	<!-- <bean id="entityManagerFactory" -->
+	<!-- class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"> -->
+	<!-- <property name="persistenceUnitName" value="JPAPU" /> -->
+	<!-- <property name="loadTimeWeaver"> -->
+	<!-- <bean -->
+	<!-- class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" 
+		/> -->
+	<!-- </property> -->
+	<!-- </bean> -->
+	<!-- method 2 -->
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+		<property name="loadTimeWeaver">
+			<bean
+				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+		</property>
+	</bean>
+
+
+	<!-- Spring JPA -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- Spring JPA allow annotation for transaction -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
 
 
 </beans>
