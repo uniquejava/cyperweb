@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link href="${ctx }/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css"
-	href="${ctx }/stylesheets/theme.css">
+	href="${ctx }/stylesheets/cyper-theme.css">
 <link rel="stylesheet"
 	href="${ctx }/lib/font-awesome/css/font-awesome.css">
 <style type="text/css">
@@ -33,21 +33,107 @@
 	color: #fff;
 	font-weight: bold;
 }
+#loading{
+	z-index:1000;
+	position:fixed;
+	top:0;
+	bottom:0;
+	left:0;
+	width:100%;
+	height:100%;
+	background:#000;
+	opacity:0.2;
+	-moz-opacity:0.2;
+	filter:alpha(opacity=2);
+	font-weight: bold;
+	text-align: center;
+ 	font-size: 2em;
+ 	color: gray;
+}
+#loading>img {
+	margin-top: 200px;
+}
 </style>
 <script src="${ctx }/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+	function showBusy(){
+		$("#loading").show();
+	}
+	function hideBusy(){
+		$("#loading").hide();
+	}
+	
+	function showMsg(msg) {
+		if (msg) {
+			$("#messageText").text(msg);
+		}
+
+		if ($("#messageText").text().trim().length > 0) {
+			$("#messageDiv").show();
+			setTimeout("$('#messageDiv').fadeOut()", 1500);
+		}
+	}
+	
+	function showAlert(msg, callback) {
+		if (msg) {
+			$("#alertText").text(msg);
+		}
+
+		$("#alertBox").modal({
+			show : true,
+			keyboard : false,
+			backdrop : true
+		});
+		$('<div class="modal-backdrop.fade"></div>').appendTo(document.body);
+		$("#btnAlert").click(function() {
+			$("#alertBox").modal("hide");
+			if (callback) {
+				callback();
+			}
+			$(".modal-backdrop.fade").remove();
+		});
+	}
+
 	function confirmDelete(id) {
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
 	}
+
 	function deleteMe(btn) {
 		var postid = $(btn).data("postid");
 		window.location = 'm2o/delete/' + postid;
 	}
+
+	function preCreate(id) {
+		$("#emp_dialog").modal("show");
+	}
+
+	function create() {
+		showBusy();
+		var form_data = $('#emp_form').serialize();
+		$.post('m2o/create.json', form_data, function(data) {
+			if(data.ok == 'true'){
+				showAlert(data.msg,function(){
+					window.location.reload();
+				});
+			}else{
+				showAlert(data.msg);
+			}
+			
+		}).done(function() {
+			hideBusy();
+		});
+	}
+	$(function() {
+		showMsg();
+	});
 </script>
 </head>
 <body>
-
+	<div id="loading" style="display:none">
+		<img src="${ctx }/images/ajaxloaderq.gif" />
+	</div>
+	
 	<div class="navbar">
 		<div class="navbar-inner">
 			<ul class="nav pull-right">
@@ -115,34 +201,34 @@
 
 		<div class="container-fluid">
 			<div class="row-fluid">
-				<c:if test="${not empty success }">
-					<div class="alert alert-success">
-						<button data-dismiss="alert" class="close" type="button">×</button>
-						${success }
-					</div>
-				</c:if>
+				<div class="alert alert-success" id="messageDiv"
+					style="display: none">
+					<button data-dismiss="alert" class="close" type="button">×</button>
+					<span id="messageText">${success }</span>
+				</div>
 
 				<div class="btn-toolbar">
-					<button class="btn btn-primary">
+					<button class="btn btn-primary" onclick="javascript:preCreate()">
 						<i class="icon-plus"></i> New Employee
 					</button>
 					<button class="btn">Import</button>
 					<button class="btn">Export</button>
 					<div class="btn-group"></div>
 				</div>
-				
+
 				<div class="well">
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Name</th>
-							<th>Salary</th>
-							<th>Type</th>
-							<th>&nbsp;</th>
-						</tr>
-					<thead>
-					<tbody>
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Name</th>
+								<th>Salary</th>
+								<th>Type</th>
+								<th>&nbsp;</th>
+							</tr>
+							<thead>
+					
+						<tbody>
 						<c:forEach items="${employees }" var="p">
 							<tr>
 								<td nowrap="nowrap">${p.id }</td>
@@ -150,7 +236,8 @@
 								<td>${p.salary }</td>
 								<td>${p.employeeType.name }<br></td>
 								<td><a href="javascript:confirmDelete('${p.id}')"><i
-										class="icon-trash"></i></a></td>
+											class="icon-trash"></i></a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -187,6 +274,62 @@
 							data-postid="" onclick="deleteMe(this)">Delete</button>
 					</div>
 				</div>
+				
+				<div class="modal small hide" id="alertBox" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<h3 id="myModalLabel">Information</h3>
+					</div>
+					<div class="modal-body">
+						<p class="info-text">
+							<i class="icon-info-sign modal-icon"></i>
+							<span id="alertText"></span>
+						</p>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" aria-hidden="true" id="btnAlert">OK</button>
+					</div>
+				</div>
+				
+				<div class="modal small hide fade" id="emp_dialog" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Employee Info</h3>
+					</div>
+					<div class="modal-body">
+					<form id="emp_form">
+						<fieldset>
+							<table>
+								<tr>
+									<td>Name: </td>
+									<td><input type="text" name="name" id="name" size="20" /></td>
+								</tr>
+								<tr>
+									<td>Salary:</td>
+									<td><input type="text" name="salary" id="salary" size="20" /></td>
+								</tr>
+								<tr>
+									<td>Type:</td>
+									<td>
+									<select id="type" name="employeeType.id">
+										<c:forEach items="${types }" var="t">
+											<option value="${t.id }">${t.name }</option>
+										</c:forEach>
+									</select>
+									</td>
+								</tr>
+							</table>
+						</fieldset>
+					</form>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+						<button class="btn btn-info" data-dismiss="modal" id="btnAdd"
+							data-postid="" onclick="create(this)">Add</button>
+					</div>
+				</div>
 
 				<footer>
 					<hr>
@@ -207,6 +350,6 @@
 	<script src="${ctx }/lib/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		$("[rel=tooltip]").tooltip();
-	</script>
-</body>
+	</script></
+						body>
 </html>

@@ -1,0 +1,31 @@
+ Exception thrown by application class 'org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean:1512'
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [applicationContext.xml]: Invocation of init method failed; nested exception is java.lang.IllegalStateException: Conflicting EntityManagerFactory interfaces - consider specifying the 'jpaVendorAdapter' or 'entityManagerFactoryInterface' property to select a specific EntityManagerFactory interface to proceed with
+at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1512)
+at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:296)
+at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:293)
+at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1117)
+at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:922)
+at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:410)
+at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:306)
+at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:112)
+at com.ibm.ws.webcontainer.webapp.WebApp.notifyServletContextCreated(WebApp.java:2220)
+at [internal classes]
+Caused by: java.lang.IllegalStateException: Conflicting EntityManagerFactory interfaces - consider specifying the 'jpaVendorAdapter' or 'entityManagerFactoryInterface' property to select a specific EntityManagerFactory interface to proceed with
+at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.createEntityManagerFactoryProxy(AbstractEntityManagerFactoryBean.java:358)
+at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:323)
+at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1571)
+at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1509)
+... 14 more
+Caused by: java.lang.IllegalArgumentException: methods with same signature createEntityManager(java.util.Map) but incompatible return types: [interface com.ibm.websphere.persistence.WsJpaEntityManager, interface org.apache.openjpa.persistence.OpenJPAEntityManagerSPI]
+at sun.misc.ProxyGenerator.checkReturnTypes(Unknown Source)
+at sun.misc.ProxyGenerator.generateClassFile(Unknown Source)
+at sun.misc.ProxyGenerator.generateProxyClass(Unknown Source)
+at java.lang.reflect.Proxy.getProxyClass0(Unknown Source)
+at java.lang.reflect.Proxy.newProxyInstance(Unknown Source)
+at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.createEntityManagerFactoryProxy(AbstractEntityManagerFactoryBean.java:347)
+... 17 more

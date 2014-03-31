@@ -22,7 +22,7 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String name;
 
 	private long salary;
@@ -43,11 +43,11 @@ public class Employee implements Serializable {
 	@JoinTable(name = "EMP_PROJ", joinColumns = @JoinColumn(name = "EMP_ID"), inverseJoinColumns = @JoinColumn(name = "PROJ_ID"))
 	private Collection<Project> projects;
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

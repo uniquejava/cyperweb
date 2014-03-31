@@ -12,28 +12,6 @@
 	href="${ctx }/stylesheets/theme.css">
 <link rel="stylesheet"
 	href="${ctx }/lib/font-awesome/css/font-awesome.css">
-<style type="text/css">
-#line-chart {
-	height: 300px;
-	width: 800px;
-	margin: 0px auto;
-	margin-top: 1em;
-}
-
-.brand {
-	font-family: georgia, serif;
-}
-
-.brand .first {
-	color: #ccc;
-	font-style: italic;
-}
-
-.brand .second {
-	color: #fff;
-	font-weight: bold;
-}
-</style>
 <script src="${ctx }/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	function check() {
@@ -204,7 +182,6 @@
 		</div>
 	</div>
 
-	<script src="${ctx }/lib/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		$("[rel=tooltip]").tooltip();
 		
