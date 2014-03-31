@@ -62,6 +62,11 @@
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+		<property name="jpaVendorAdapter">
+      		<bean class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
+      			<property name="database" value="MYSQL" />
+      		</bean>
+   		</property>
 		<property name="loadTimeWeaver">
 			<bean
 				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />

@@ -40,6 +40,9 @@
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
 	}
+	function preCreate(id) {
+		$("#emp_dialog").modal("show");
+	}
 	function deleteMe(btn) {
 		var postid = $(btn).data("postid");
 		window.location = 'm2o/delete/' + postid;
@@ -123,7 +126,7 @@
 				</c:if>
 
 				<div class="btn-toolbar">
-					<button class="btn btn-primary">
+					<button class="btn btn-primary" onclick="javascript:preCreate()">
 						<i class="icon-plus"></i> New Employee
 					</button>
 					<button class="btn">Import</button>
@@ -150,7 +153,8 @@
 								<td>${p.salary }</td>
 								<td>${p.employeeType.name }<br></td>
 								<td><a href="javascript:confirmDelete('${p.id}')"><i
-										class="icon-trash"></i></a></td>
+										class="icon-trash"></i></a>
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -185,6 +189,40 @@
 						<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 						<button class="btn btn-danger" data-dismiss="modal" id="btnDelete"
 							data-postid="" onclick="deleteMe(this)">Delete</button>
+					</div>
+				</div>
+				
+				<div class="modal small hide fade" id="emp_dialog" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Employee Info</h3>
+					</div>
+					<div class="modal-body">
+					<form id="roll_form">
+						<fieldset>
+							<table>
+								<tr>
+									<td>Name: </td>
+									<td><input type="text" name="name" id="name" size="20" /></td>
+								</tr>
+								<tr>
+									<td>Salary:</td>
+									<td><input type="text" name="salary" id="salary" size="20" /></td>
+								</tr>
+								<tr>
+									<td>Type:</td>
+									<td><input type="text" name="type" id="type" size="20" /></td>
+								</tr>
+							</table>
+						</fieldset>
+					</form>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+						<button class="btn btn-info" data-dismiss="modal" id="btnAdd"
+							data-postid="" onclick="create(this)">Add</button>
 					</div>
 				</div>
 
