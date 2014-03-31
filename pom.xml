@@ -14,6 +14,7 @@
 			<url>http://repo.spring.io/milestone</url>
 		</repository>
 	</repositories>
+
 	<dependencies>
 		<!-- log4j -->
 		<dependency>
@@ -109,6 +110,7 @@
 			<version>2.2.2</version>
 			<scope>compile</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
@@ -126,8 +128,16 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
+			<scope>test</scope>
 		</dependency>
 
+		<!-- OpenJPA enhancer, put to tomcat/lib, and add -javaagent:C:/w/servers/tomcat-7.0.42/lib/spring-instrument-3.2.7.RELEASE.jar -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-instrument</artifactId>
+			<version>${spring.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>cyperweb</finalName>

@@ -36,23 +36,13 @@
 </style>
 <script src="${ctx }/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-	function check() {
-		$name = document.getElementById("name");
-		if ($name.value == "") {
-			alert("please enter a name.");
-			$name.focus();
-			return false;
-		}
-
-		return true;
-	}
 	function confirmDelete(id) {
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
 	}
 	function deleteMe(btn) {
 		var postid = $(btn).data("postid");
-		window.location = 'profile/delete/' + postid;
+		window.location = 'm2o/delete/' + postid;
 	}
 </script>
 </head>
@@ -91,70 +81,82 @@
 		</form>
 
 		<a href="#accounts-menu" class="nav-header" data-toggle="collapse">
-		<i class="icon-briefcase"></i>Account</a>
-        <ul id="accounts-menu" class="nav nav-list collapse in">
-            <li class="active"><a href="${ctx }/profile">Profile</a></li>
-            <li><a href="#">Password</a></li>
-        </ul>
-        
+			<i class="icon-briefcase"></i>Account
+		</a>
+		<ul id="accounts-menu" class="nav nav-list collapse in">
+			<li><a href="${ctx }/profile">Profile</a></li>
+			<li><a href="#">Password</a></li>
+		</ul>
+
 		<a href="#relation-menu" class="nav-header" data-toggle="collapse">
-		<i class="icon-beaker"></i>Relationship<span class="label label-info">+5</span></a>
+			<i class="icon-beaker"></i>Relationship<span class="label label-info">+5</span>
+		</a>
 		<ul id="relation-menu" class="nav nav-list collapse in">
-			<li><a href="${ctx }/m2o">Many2one</a></li>
-			<li><a href="#">One2one</a></li>
+			<li class="active"><a href="#">Many2one</a></li>
+			<li><a href="${ctx }/m2o">One2one</a></li>
 			<li><a href="#">One2many</a></li>
 			<li><a href="#">Many2many</a></li>
 			<li><a href="#">Recursive</a></li>
 
 		</ul>
-		
+
 	</div>
 
 	<div class="content">
 		<div class="header">
 
-			<h1 class="page-title">Profiles</h1>
+			<h1 class="page-title">Employee</h1>
 		</div>
 
 		<ul class="breadcrumb">
 			<li><a href="${ctx }">Home</a><span class="divider">/</span></li>
-			<li class="active">Profile</li>
+			<li class="active">@ManyToOne</li>
 		</ul>
 
 		<div class="container-fluid">
 			<div class="row-fluid">
-					<c:if test="${not empty success }">
+				<c:if test="${not empty success }">
 					<div class="alert alert-success">
-					<button data-dismiss="alert" class="close" type="button">×</button>
-					${success }</div>
-					</c:if>
-					<form action="profile/create" method="post"
-						onsubmit="return check();" class="form-search">
-						<label for="name">Name:</label> <input type="text" id="name"
-							name="name" placeholder="Name">
+						<button data-dismiss="alert" class="close" type="button">×</button>
+						${success }
+					</div>
+				</c:if>
 
-						<button type="submit" class="btn btn-primary">Add new</button>
-					</form>
-					<table
-						class="table table-striped table-bordered table-hover table-condensed">
-						<thead>
+				<div class="btn-toolbar">
+					<button class="btn btn-primary">
+						<i class="icon-plus"></i> New Employee
+					</button>
+					<button class="btn">Import</button>
+					<button class="btn">Export</button>
+					<div class="btn-group"></div>
+				</div>
+				
+				<div class="well">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Salary</th>
+							<th>Type</th>
+							<th>&nbsp;</th>
+						</tr>
+					<thead>
+					<tbody>
+						<c:forEach items="${employees }" var="p">
 							<tr>
-								<th>#</th>
-								<th>Name</th>
-								<th>&nbsp;</th>
+								<td nowrap="nowrap">${p.id }</td>
+								<td>${p.name }</td>
+								<td>${p.salary }</td>
+								<td>${p.employeeType.name }<br></td>
+								<td><a href="javascript:confirmDelete('${p.id}')"><i
+										class="icon-trash"></i></a></td>
 							</tr>
-						<thead>
-						<tbody>
-							<c:forEach items="${profiles }" var="p">
-								<tr>
-									<td nowrap="nowrap">${p.id }</td>
-									<td>${p.name }</td>
-									<td><a href="javascript:confirmDelete('${p.id}')"><i
-											class="icon-trash"></i></a></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+						</c:forEach>
+					</tbody>
+				</table>
+				</div>
+				
 				<div class="pagination">
 					<ul>
 						<li><a href="#">Prev</a></li>
@@ -195,9 +197,7 @@
 							href="http://www.portnine.com" target="_blank">Portnine</a>
 					</p>
 
-					<p>
-						&copy; 2014 
-					</p>
+					<p>&copy; 2014</p>
 				</footer>
 
 			</div>
@@ -207,7 +207,6 @@
 	<script src="${ctx }/lib/bootstrap/js/bootstrap.js"></script>
 	<script type="text/javascript">
 		$("[rel=tooltip]").tooltip();
-		
 	</script>
 </body>
 </html>

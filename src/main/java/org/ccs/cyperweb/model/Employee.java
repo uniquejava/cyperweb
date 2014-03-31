@@ -27,7 +27,7 @@ public class Employee implements Serializable {
 
 	private long salary;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "EMP_TYPE_ID")
 	private EmployeeType employeeType;
 

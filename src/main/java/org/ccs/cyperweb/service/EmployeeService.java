@@ -67,4 +67,9 @@ public class EmployeeService {
 	public List<Employee> findEmployeesByParkingLot(String lot) {
 		return employeeDao.findEmployeesByParkingLot(lot);
 	}
+	
+	//------below are for web -----
+	public List<Employee> findAllEmployees() {
+		return employeeDao.findAllEmployees();
+	}
 }

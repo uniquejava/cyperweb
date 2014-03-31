@@ -1,0 +1,1 @@
+openjpa-all-2.2.2.jar
