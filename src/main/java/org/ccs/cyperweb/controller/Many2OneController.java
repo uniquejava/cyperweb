@@ -34,21 +34,28 @@ public class Many2OneController {
 
 	@RequestMapping(value = "create", method = RequestMethod.POST)
 	public void create(Employee employee, Model model) {
-		// Encountered unmanaged object
-		// "org.ccs.cyperweb.model.EmployeeType@3a1e8730" in life cycle state
-		// unmanaged while cascading persistence via field
-		// "org.ccs.cyperweb.model.Employee.employeeType" during flush.
-		// However, this field does not allow cascade persist.
-		// You cannot flush unmanaged objects or graphs that have persistent
-		// associations to unmanaged objects.
-		Long id = employee.getEmployeeType().getId();
-		EmployeeType type = employeeTypeService.getEmployeeTypeReference(id);
-		employee.setEmployeeType(type);
-		// fix end
 
-		employeeService.saveEmployee(employee);
-		model.addAttribute("ok", "true");
-		model.addAttribute("msg", "create success!");
+		try {
+			// Encountered unmanaged object
+			// "org.ccs.cyperweb.model.EmployeeType@3a1e8730" in life cycle state
+			// unmanaged while cascading persistence via field
+			// "org.ccs.cyperweb.model.Employee.employeeType" during flush.
+			// However, this field does not allow cascade persist.
+			// You cannot flush unmanaged objects or graphs that have persistent
+			// associations to unmanaged objects.
+			Long id = employee.getEmployeeType().getId();
+			EmployeeType type = employeeTypeService.getEmployeeTypeReference(id);
+			employee.setEmployeeType(type);
+			// fix end
+
+			employeeService.saveEmployee(employee);
+
+			model.addAttribute("ok", "true");
+			model.addAttribute("msg", "create success!");
+		} catch (Exception e) {
+			model.addAttribute("ok", "false");
+			model.addAttribute("msg", e.getMessage());
+		}
 	}
 
 	@RequestMapping(value = "delete/{id}")

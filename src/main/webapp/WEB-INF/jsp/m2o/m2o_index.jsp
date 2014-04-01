@@ -8,53 +8,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <link href="${ctx }/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="${ctx }/stylesheets/cyper-theme.css">
-<link rel="stylesheet"
-	href="${ctx }/lib/font-awesome/css/font-awesome.css">
-<style type="text/css">
-#line-chart {
-	height: 300px;
-	width: 800px;
-	margin: 0px auto;
-	margin-top: 1em;
-}
-
-.brand {
-	font-family: georgia, serif;
-}
-
-.brand .first {
-	color: #ccc;
-	font-style: italic;
-}
-
-.brand .second {
-	color: #fff;
-	font-weight: bold;
-}
-#loading{
-	z-index:1000;
-	position:fixed;
-	top:0;
-	bottom:0;
-	left:0;
-	width:100%;
-	height:100%;
-	background:#000;
-	opacity:0.2;
-	-moz-opacity:0.2;
-	filter:alpha(opacity=2);
-	font-weight: bold;
-	text-align: center;
- 	font-size: 2em;
- 	color: gray;
-}
-#loading>img {
-	margin-top: 200px;
-}
-</style>
-<script src="${ctx }/lib/jquery-1.7.2.min.js" type="text/javascript"></script>
+<link href="${ctx }/lib/cyperui/css/cyperui.css" rel="stylesheet">
+<link href="${ctx }/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+<script src="${ctx }/lib/cyperui/js/cyperui.js" type="text/javascript"></script>
+<script src="${ctx }/lib/jquery-1.8.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 	function showBusy(){
 		$("#loading").show();
@@ -82,26 +39,21 @@
 		$("#alertBox").modal({
 			show : true,
 			keyboard : false,
-			backdrop : true
+			backdrop : false
 		});
-		$('<div class="modal-backdrop.fade"></div>').appendTo(document.body);
+		$('<div class="modal-backdrop"></div>').appendTo(document.body);
 		$("#btnAlert").click(function() {
 			$("#alertBox").modal("hide");
 			if (callback) {
 				callback();
 			}
-			$(".modal-backdrop.fade").remove();
+			$(".modal-backdrop").remove();
 		});
 	}
 
 	function confirmDelete(id) {
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
-	}
-
-	function deleteMe(btn) {
-		var postid = $(btn).data("postid");
-		window.location = 'm2o/delete/' + postid;
 	}
 
 	function preCreate(id) {
@@ -126,14 +78,16 @@
 	}
 	$(function() {
 		showMsg();
+		$("#btnDelete").click(function(){
+			var postid = $("#btnDelete").data("postid");
+			window.location = 'm2o/delete/' + postid;
+			
+		});
+		
 	});
 </script>
 </head>
 <body>
-	<div id="loading" style="display:none">
-		<img src="${ctx }/images/ajaxloaderq.gif" />
-	</div>
-	
 	<div class="navbar">
 		<div class="navbar-inner">
 			<ul class="nav pull-right">
@@ -158,8 +112,6 @@
 				<span class="second">Data Studio</span></a>
 		</div>
 	</div>
-
-
 
 	<div class="sidebar-nav">
 		<form class="search form-inline">
@@ -254,42 +206,8 @@
 						<li><a href="#">Next</a></li>
 					</ul>
 				</div>
-
-				<div class="modal small hide fade" id="myModal" tabindex="-1"
-					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal"
-							aria-hidden="true">×</button>
-						<h3 id="myModalLabel">Delete Confirmation</h3>
-					</div>
-					<div class="modal-body">
-						<p class="error-text">
-							<i class="icon-warning-sign modal-icon"></i>Are you sure you want
-							to delete the profile?
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-						<button class="btn btn-danger" data-dismiss="modal" id="btnDelete"
-							data-postid="" onclick="deleteMe(this)">Delete</button>
-					</div>
-				</div>
 				
-				<div class="modal small hide" id="alertBox" tabindex="-1"
-					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-header">
-						<h3 id="myModalLabel">Information</h3>
-					</div>
-					<div class="modal-body">
-						<p class="info-text">
-							<i class="icon-info-sign modal-icon"></i>
-							<span id="alertText"></span>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button class="btn" aria-hidden="true" id="btnAlert">OK</button>
-					</div>
-				</div>
+				<jsp:include page="../include/cyperui.jsp"/>
 				
 				<div class="modal small hide fade" id="emp_dialog" tabindex="-1"
 					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
