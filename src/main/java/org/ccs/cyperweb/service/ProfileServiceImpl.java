@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import smartcrud.common.orm.Page;
+import smartcrud.common.orm.PropertyFilter;
+
 @Service
 public class ProfileServiceImpl implements ProfileService {
 
@@ -28,6 +31,10 @@ public class ProfileServiceImpl implements ProfileService {
 		profileDao.deleteProfile(id);
 	}
 	
+
+	public Page<Profile> findByPage(Page<Profile> page, List<PropertyFilter> filters) {
+		return profileDao.findByPage(page,filters);
+	}
 
 	public void setProfileDao(ProfileDao profileDao) {
 		this.profileDao = profileDao;

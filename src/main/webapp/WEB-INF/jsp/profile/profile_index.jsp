@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags" %>
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <head>
@@ -45,6 +46,19 @@
 					${success }
 				</div>
 			</c:if>
+			
+			<h3>
+				Profile list
+				<span class="pull-right">
+					<form id="searchForm" class="form-search" action="#">
+						<input type="hidden" id="pageIndex" name="pageIndex" value="1"> 
+						name： <input type="text" name="filter_LIKES_name" class="input-medium" value="${param.filter_LIKES_name}">
+						
+						<input type="submit" class="btn" value="Search"> 
+					</form>
+				</span>
+			</h3>
+		
 			<form action="profile/create" method="post"
 				onsubmit="return check();" class="form-search">
 				<label for="name">Name:</label> <input type="text" id="name"
@@ -62,7 +76,7 @@
 					</tr>
 				<thead>
 				<tbody>
-					<c:forEach items="${profiles }" var="p">
+					<c:forEach items="${page.content }" var="p">
 						<tr>
 							<td nowrap="nowrap">${p.id }</td>
 							<td>${p.name }</td>
@@ -72,16 +86,8 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<div class="pagination">
-				<ul>
-					<li><a href="#">Prev</a></li>
-					<li><a href="#">1</a></li>
-					<li><a href="#">2</a></li>
-					<li><a href="#">3</a></li>
-					<li><a href="#">4</a></li>
-					<li><a href="#">Next</a></li>
-				</ul>
-			</div>
+			
+			<tags:pagination page="${page}" paginationSize="5"/>
 
 			<div class="modal small hide fade" id="myModal" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

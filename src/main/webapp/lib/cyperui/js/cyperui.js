@@ -1,3 +1,8 @@
+function jumpPage(pageIndex) {
+	$("#pageIndex").val(pageIndex);
+	$("#searchForm").submit();
+}
+
 function showBusy() {
 	$("#loading").show();
 }
