@@ -5,52 +5,7 @@
 <!DOCTYPE html>
 <head>
 <title>profile</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<link href="${ctx }/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="${ctx }/lib/cyperui/css/cyperui.css" rel="stylesheet">
-<link href="${ctx }/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
-<script src="${ctx }/lib/cyperui/js/cyperui.js" type="text/javascript"></script>
-<script src="${ctx }/lib/jquery-1.8.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
-	function showBusy(){
-		$("#loading").show();
-	}
-	function hideBusy(){
-		$("#loading").hide();
-	}
-	
-	function showMsg(msg) {
-		if (msg) {
-			$("#messageText").text(msg);
-		}
-
-		if ($("#messageText").text().trim().length > 0) {
-			$("#messageDiv").show();
-			setTimeout("$('#messageDiv').fadeOut()", 1500);
-		}
-	}
-	
-	function showAlert(msg, callback) {
-		if (msg) {
-			$("#alertText").text(msg);
-		}
-
-		$("#alertBox").modal({
-			show : true,
-			keyboard : false,
-			backdrop : false
-		});
-		$('<div class="modal-backdrop"></div>').appendTo(document.body);
-		$("#btnAlert").click(function() {
-			$("#alertBox").modal("hide");
-			if (callback) {
-				callback();
-			}
-			$(".modal-backdrop").remove();
-		});
-	}
-
 	function confirmDelete(id) {
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
@@ -88,63 +43,8 @@
 </script>
 </head>
 <body>
-	<div class="navbar">
-		<div class="navbar-inner">
-			<ul class="nav pull-right">
 
-				<li><a href="#" class="visible-tablet visible-desktop"
-					role="button">Settings</a></li>
-				<li id="fat-menu" class="dropdown"><a href="#" role="button"
-					class="dropdown-toggle" data-toggle="dropdown"> <i
-						class="icon-user"></i> Cyper Yin <i class="icon-caret-down"></i>
-				</a>
-
-					<ul class="dropdown-menu">
-						<li><a tabindex="-1" href="#">My Account</a></li>
-						<li class="divider"></li>
-						<li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
-						<li class="divider visible-phone"></li>
-						<li><a tabindex="-1" href="sign-in.html">Logout</a></li>
-					</ul></li>
-
-			</ul>
-			<a class="brand" href="index.html"><span class="first">Cyper</span>
-				<span class="second">Data Studio</span></a>
-		</div>
-	</div>
-
-	<div class="sidebar-nav">
-		<form class="search form-inline">
-			<input type="text" placeholder="Search...">
-		</form>
-
-		<a href="#accounts-menu" class="nav-header" data-toggle="collapse">
-			<i class="icon-briefcase"></i>Account
-		</a>
-		<ul id="accounts-menu" class="nav nav-list collapse in">
-			<li><a href="${ctx }/profile">Profile</a></li>
-			<li><a href="#">Password</a></li>
-		</ul>
-
-		<a href="#relation-menu" class="nav-header" data-toggle="collapse">
-			<i class="icon-beaker"></i>Relationship<span class="label label-info">+5</span>
-		</a>
-		<ul id="relation-menu" class="nav nav-list collapse in">
-			<li class="active"><a href="#">Many2one</a></li>
-			<li><a href="${ctx }/m2o">One2one</a></li>
-			<li><a href="#">One2many</a></li>
-			<li><a href="#">Many2many</a></li>
-			<li><a href="#">Recursive</a></li>
-
-		</ul>
-
-	</div>
-
-	<div class="content">
-		<div class="header">
-
-			<h1 class="page-title">Employee</h1>
-		</div>
+		
 
 		<ul class="breadcrumb">
 			<li><a href="${ctx }">Home</a><span class="divider">/</span></li>
@@ -249,24 +149,20 @@
 					</div>
 				</div>
 
-				<footer>
-					<hr>
-					<!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
-					<p class="pull-right">
-						A <a href="http://www.portnine.com/bootstrap-themes"
-							target="_blank">Free Bootstrap Theme</a> by <a
-							href="http://www.portnine.com" target="_blank">Portnine</a>
-					</p>
+			<footer>
+				<hr>
+				<!-- Purchase a site license to remove this link from the footer: http://www.portnine.com/bootstrap-themes -->
+				<p class="pull-right">
+					A <a href="http://www.portnine.com/bootstrap-themes"
+						target="_blank">Free Bootstrap Theme</a> by <a
+						href="http://www.portnine.com" target="_blank">Portnine</a>
+				</p>
 
-					<p>&copy; 2014</p>
-				</footer>
+				<p>&copy; 2014</p>
+			</footer>
 
-			</div>
 		</div>
-	</div>
-
-	<script src="${ctx }/lib/bootstrap/js/bootstrap.js"></script>
-	<script type="text/javascript">
-		$("[rel=tooltip]").tooltip();
-	</script></body>
+		</div>
+	
+	</body>
 </html>
