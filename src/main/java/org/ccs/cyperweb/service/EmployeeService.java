@@ -40,14 +40,12 @@ public class EmployeeService {
 		employeeDao.batchRemove(name);
 	}
 
-	@Transactional
+	public Employee getReference(Long id) {
+		return employeeDao.getReference(id);
+	}
+	
 	public Employee findEmployeeById(Long id) {
 		Employee ee=  employeeDao.findEmployeeById(id);
-		
-		logger.debug("name==>" +ee.getName());
-		//LAZY
-		logger.debug("type==>" +ee.getEmployeeType());
-		
 		return ee;
 	}
 

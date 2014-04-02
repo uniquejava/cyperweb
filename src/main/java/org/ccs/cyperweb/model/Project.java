@@ -7,12 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 @Entity
 @Table(name = "PROJECT")
 public class Project implements Serializable {
 	private Long id;
 	private String name;
 	
+	@JsonManagedReference("proj-employee")
 	@ManyToMany(mappedBy = "projects")
 	private Collection<Employee> employees;
 

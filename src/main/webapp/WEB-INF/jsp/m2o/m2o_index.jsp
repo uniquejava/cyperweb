@@ -4,15 +4,42 @@
 <c:set var="ctx" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <head>
-<title>profile</title>
+<title>Many2One</title>
 <script type="text/javascript">
 	function confirmDelete(id) {
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
 	}
 
-	function preCreate(id) {
+	function preCreate() {
+		var keys = [ 'id', 'name', 'salary', 'type' ];
+		for ( var i = 0; i < keys.length; i++) {
+			var key = keys[i];
+			$("#" + key).val("");
+		}
+		$("#btnAdd").show();
+		$("#btnSave").hide();
 		$("#emp_dialog").modal("show");
+	}
+	function preUpdate(id) {
+		$.get("m2o/update/" + id + ".json?ts="+ new Date().getTime(), function(data) {
+			var t = data['e'];
+			var keys = ['id', 'name', 'salary', 'type' ];
+			for ( var i = 0; i < keys.length; i++) {
+				var key = keys[i];
+				$("#" + key).val(t[key]);
+				
+				//nested object
+				if(key == 'type'){
+					$("#" + key).val(t["employeeType"]["id"]);
+				}
+			}
+			
+			$("#btnAdd").hide();
+			$("#btnSave").show();
+			$("#emp_dialog").modal("show");
+		}, "json");
+		
 	}
 
 	function create() {
@@ -31,6 +58,24 @@
 			hideBusy();
 		});
 	}
+	
+	function update() {
+		showBusy();
+		var form_data = $('#emp_form').serialize();
+		$.post('m2o/update.json', form_data, function(data) {
+			if(data.ok == 'true'){
+				showAlert(data.msg,function(){
+					window.location.reload();
+				});
+			}else{
+				showAlert(data.msg);
+			}
+			
+		}).done(function() {
+			hideBusy();
+		});
+	}
+	
 	$(function() {
 		showMsg();
 		$("#btnDelete").click(function(){
@@ -87,8 +132,12 @@
 								<td>${p.name }</td>
 								<td>${p.salary }</td>
 								<td>${p.employeeType.name }<br></td>
-								<td><a href="javascript:confirmDelete('${p.id}')"><i
+								<td>
+								<a href="javascript:confirmDelete('${p.id}')"><i
 											class="icon-trash"></i></a>
+								&nbsp;
+								<a href="javascript:preUpdate('${p.id}')"><i
+											class="icon-pencil"></i></a>
 								</td>
 							</tr>
 						</c:forEach>
@@ -119,6 +168,7 @@
 					<div class="modal-body">
 					<form id="emp_form">
 						<fieldset>
+							<input type="hidden" name="id" id="id"/>
 							<table>
 								<tr>
 									<td>Name: </td>
@@ -146,6 +196,9 @@
 						<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 						<button class="btn btn-info" data-dismiss="modal" id="btnAdd"
 							data-postid="" onclick="create(this)">Add</button>
+							
+						<button class="btn btn-info" data-dismiss="modal" id="btnSave"
+							data-postid="" onclick="update(this)">Save</button>
 					</div>
 				</div>
 

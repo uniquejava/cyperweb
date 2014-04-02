@@ -7,6 +7,9 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 @Entity
 @Table(name = "PARKING_SPACE")
 public class ParkingSpace implements Serializable {
@@ -14,6 +17,7 @@ public class ParkingSpace implements Serializable {
 	private String lot;
 	private String location;
 
+	@JsonManagedReference("ps-employee")
 	@OneToOne(mappedBy = "parkingSpace")
 	private Employee employee;
 

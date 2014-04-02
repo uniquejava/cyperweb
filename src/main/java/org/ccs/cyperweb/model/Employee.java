@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 @Entity
 @Table(name = "EMP")
@@ -31,14 +32,17 @@ public class Employee implements Serializable {
 	@JoinColumn(name = "EMP_TYPE_ID")
 	private EmployeeType employeeType;
 
+	@JsonBackReference("ps-employee")
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "PSPACE_ID")
 	private ParkingSpace parkingSpace;
 	
+	@JsonBackReference("dept-employee")
 	@ManyToOne
 	@JoinColumn(name = "DEPT_ID")
 	private Department department;
 
+	@JsonBackReference("proj-employee")
 	@ManyToMany
 	@JoinTable(name = "EMP_PROJ", joinColumns = @JoinColumn(name = "EMP_ID"), inverseJoinColumns = @JoinColumn(name = "PROJ_ID"))
 	private Collection<Project> projects;

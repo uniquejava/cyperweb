@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 @Entity
 @Table(name = "DEPT")
 public class Department implements Serializable {
@@ -16,6 +18,7 @@ public class Department implements Serializable {
 	private int id;
 	private String name;
 
+	@JsonManagedReference("dept-employee")
 	@OneToMany(mappedBy = "department")
 	private Collection<Employee> employees = new ArrayList<Employee>();
 

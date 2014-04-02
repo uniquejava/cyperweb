@@ -37,7 +37,8 @@ public class Many2OneController {
 
 		try {
 			// Encountered unmanaged object
-			// "org.ccs.cyperweb.model.EmployeeType@3a1e8730" in life cycle state
+			// "org.ccs.cyperweb.model.EmployeeType@3a1e8730" in life cycle
+			// state
 			// unmanaged while cascading persistence via field
 			// "org.ccs.cyperweb.model.Employee.employeeType" during flush.
 			// However, this field does not allow cascade persist.
@@ -52,6 +53,24 @@ public class Many2OneController {
 
 			model.addAttribute("ok", "true");
 			model.addAttribute("msg", "create success!");
+		} catch (Exception e) {
+			model.addAttribute("ok", "false");
+			model.addAttribute("msg", e.getMessage());
+		}
+	}
+
+	@RequestMapping("update/{id}")
+	public void update(Model model, @PathVariable("id") Long id) {
+		Employee e = employeeService.findEmployeeById(id);
+		model.addAttribute("e", e);
+	}
+
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public void update(Employee employee, Model model) {
+		try {
+			employeeService.updateEmployee(employee);
+			model.addAttribute("ok", "true");
+			model.addAttribute("msg", "update success!");
 		} catch (Exception e) {
 			model.addAttribute("ok", "false");
 			model.addAttribute("msg", e.getMessage());
