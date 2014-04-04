@@ -17,6 +17,16 @@
 
 		return true;
 	}
+	function preCreate(){
+		var keys = [ 'id', 'name'];
+		for ( var i = 0; i < keys.length; i++) {
+			var key = keys[i];
+			$("#" + key).val("");
+		}
+		$("#btnAdd").show();
+		$("#btnSave").hide();
+		$("#profile_dialog").modal("show");
+	}
 	function confirmDelete(id) {
 		$("#btnDelete").data("postid", id);
 		$("#myModal").modal("show");
@@ -28,11 +38,6 @@
 </script>
 </head>
 <body>
-
-	<div class="header">
-		<h1 class="page-title">Profiles</h1>
-	</div>
-
 	<ul class="breadcrumb">
 		<li><a href="${ctx }">Home</a><span class="divider">/</span></li>
 		<li class="active">Profile</li>
@@ -47,25 +52,30 @@
 				</div>
 			</c:if>
 			
-			<h3>
-				Profile list
-				<span class="pull-right">
+			<div class="btn-toolbar">
+				<span class="pull-left">
 					<form id="searchForm" class="form-search" action="#">
 						<input type="hidden" id="pageIndex" name="pageIndex" value="1"> 
-						name： <input type="text" name="filter_LIKES_name" class="input-medium" value="${param.filter_LIKES_name}">
-						
-						<input type="submit" class="btn" value="Search"> 
+						<div class="input-group">
+							name： <input type="text" name="filter_LIKES_name" class="form-control icon-search" placeholder="name" value="${param.filter_LIKES_name}">
+							<span class="input-group-btn">
+						        <button class="btn btn-info " type="submit">Go!</button>
+						    </span>
+					    </div>
 					</form>
 				</span>
-			</h3>
+				
+				<span class="pull-right">
+					<button class="btn btn-primary" onclick="javascript:preCreate()">
+						<i class="icon-plus"></i> New Profile
+					</button>
+					<button class="btn">Import</button>
+					<button class="btn">Export</button>
+					<div class="btn-group"></div>
+				</span>
+			</div>
 		
-			<form action="profile/create" method="post"
-				onsubmit="return check();" class="form-search">
-				<label for="name">Name:</label> <input type="text" id="name"
-					name="name" placeholder="Name">
-
-				<button type="submit" class="btn btn-primary">Add new</button>
-			</form>
+		
 			<table
 				class="table table-striped table-bordered table-hover table-condensed">
 				<thead>
@@ -89,6 +99,37 @@
 			
 			<tags:pagination page="${page}" paginationSize="5"/>
 
+
+			<div class="modal small hide fade" id="profile_dialog" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×</button>
+						<h3 id="myModalLabel">Profile Info</h3>
+					</div>
+					<div class="modal-body">
+					<form id="profile_form">
+						<fieldset>
+							<input type="hidden" name="id" id="id"/>
+							<table>
+								<tr>
+									<td>Name: </td>
+									<td><input type="text" name="name" id="name" size="20" /></td>
+								</tr>
+							</table>
+						</fieldset>
+					</form>
+					</div>
+					<div class="modal-footer">
+						<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+						<button class="btn btn-info" data-dismiss="modal" id="btnAdd"
+							data-postid="" onclick="create(this)">Add</button>
+							
+						<button class="btn btn-info" data-dismiss="modal" id="btnSave"
+							data-postid="" onclick="update(this)">Save</button>
+					</div>
+				</div>
+				
 			<div class="modal small hide fade" id="myModal" tabindex="-1"
 				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-header">

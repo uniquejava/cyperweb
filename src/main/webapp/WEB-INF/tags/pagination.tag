@@ -14,7 +14,7 @@ request.setAttribute("begin", begin);
 request.setAttribute("end", end);
 %>
 
-<div class="pagination">
+<div class="pagination pagination-small">
 	<ul>
 		 <% if (page.hasPrevPage){%>
                	<li><a onclick="jumpPage(1)" href="javascript:void(0)">&lt;&lt;</a></li>
