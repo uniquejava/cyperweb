@@ -40,3 +40,17 @@
 		<button class="btn" aria-hidden="true" id="btnAlert">OK</button>
 	</div>
 </div>
+
+
+<div id="confirmDialog" style="display: none">
+	<div class="ui-state-highlight ui-corner-all"
+		style="margin-top: 20px; margin: 0 auto; padding: 0 .7em;">
+		<p>
+			<span class="ui-icon ui-icon-info"
+				style="float: left; margin-right: .3em;"></span> 
+				<span id="confirmMessage"></span>
+		</p>
+	</div>
+	<div style="margin: 0 auto; padding: .7em .7em; text-align: center;">
+	</div>
+</div>

@@ -40,3 +40,36 @@ function showAlert(msg, callback) {
 		$(".modal-backdrop").remove();
 	});
 }
+
+var showInfo = showConfirm = function(options) {
+	options = $.extend({title:"Cyper UI"},options||{});
+	var title = options["title"];
+	var message = options["message"];
+	var ok = options["ok"];
+	var reload = options["reload"];
+	$("#confirmMessage").text(message);
+	$("#confirmDialog").dialog({
+		title : title,
+		width : 500,
+		height : 200,
+		autoOpen : true,
+		modal : true,
+		buttons : {
+			"Ok" : function(e) {
+				$(this).dialog('close');
+				if(reload){
+					window.location.reload();
+				} else if(ok){
+					ok();
+				}
+			},
+			"Cancel" : function(e) {
+				$(this).dialog('close');
+			}
+		}
+	});
+};
+
+
+
+

@@ -14,14 +14,15 @@
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="${ctx }/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
-<link href="${ctx }/lib/cyperui/css/cyperui.css" rel="stylesheet">
-<link href="${ctx }/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
-<script src="${ctx }/lib/cyperui/js/cyperui.js" type="text/javascript"></script>
-<script src="${ctx }/lib/jquery-1.8.1.min.js" type="text/javascript"></script>
-
+<!-- Le styles -->
+<link rel="stylesheet" href="${ctx }/assets/css/bootstrap.css">
+<link rel="stylesheet" href="${ctx }/css/custom-theme/jquery-ui-1.10.3.custom.css">
+<link rel="stylesheet" href="${ctx }/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="${ctx }/lib/cyperui/css/cyperui.css">
+<script src="${ctx }/assets/js/vendor/jquery-1.9.1.min.js" type="text/javascript"></script>
 <sitemesh:head />
 </head>
+
 
 <body>
 	<%@ include file="/WEB-INF/layouts/header.jsp"%>
@@ -29,6 +30,11 @@
 		<sitemesh:body />
 	</div>
 	<%@ include file="/WEB-INF/layouts/footer.jsp"%>
-	<script src="${ctx }/lib/bootstrap/js/bootstrap.js"></script>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="${ctx }/assets/js/vendor/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+	<script src="${ctx }/assets/js/vendor/holder.js" type="text/javascript"></script>
+	<script src="${ctx }/assets/js/vendor/bootstrap.js" type="text/javascript"></script>
+	<script src="${ctx }/assets/js/vendor/jquery-ui-1.10.3.custom.min.js" type="text/javascript"></script>
+	<script src="${ctx }/lib/cyperui/js/cyperui.js" type="text/javascript"></script>
 </body>
 </html>

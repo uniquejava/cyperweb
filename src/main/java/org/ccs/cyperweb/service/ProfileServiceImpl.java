@@ -25,12 +25,20 @@ public class ProfileServiceImpl implements ProfileService {
 	public void createProfile(Profile p) {
 		profileDao.createProfile(p);
 	}
+	
+	@Transactional
+	public void updateProfile(Profile o) {
+		profileDao.updateProfile(o);
+	}
 
 	@Transactional
 	public void deleteProfile(Long id) {
 		profileDao.deleteProfile(id);
 	}
 	
+	public Profile findProfileById(Long id) {
+		return profileDao.findProfileById(id);
+	}
 
 	public Page<Profile> findByPage(Page<Profile> page, List<PropertyFilter> filters) {
 		return profileDao.findByPage(page,filters);

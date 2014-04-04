@@ -35,10 +35,25 @@ public class ProfileDaoImpl implements ProfileDao {
 		jdbcTemplate.update("insert into profile(name) values (?)", new Object[] { p.getName() });
 	}
 
+	public void updateProfile(Profile o) {
+		jdbcTemplate.update("update profile p set p.name=? where p.id=? ", new Object[] {o.getName(),o.getId() });
+	}
+	
 	public void deleteProfile(Long id) {
 		jdbcTemplate.update("delete from profile where id=?", id);
 	}
 
+	public Profile findProfileById(Long id) {
+		return jdbcTemplate.queryForObject("select * from profile p where p.id=?", new RowMapper<Profile>(){
+			public Profile mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Profile p = new Profile();
+				p.setId(rs.getLong("ID"));
+				p.setName(rs.getString("NAME"));
+				return p;
+			}
+		},new Object[]{id});
+	}
+	
 	public int count(Page<Profile> page, final List<PropertyFilter> filters) {
 		Sql sql = new Sql("select count(*) from profile where 1=1 ", page, filters);
 		sql.build4count();
