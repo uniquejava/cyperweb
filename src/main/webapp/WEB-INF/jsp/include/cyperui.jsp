@@ -7,6 +7,10 @@
 	<img src="${ctx }/images/ajaxloaderq.gif" />
 </div>	
 
+<form id="utilityForm" method="post" action="" style="display:none">
+	<input name="ids" id="ids" value=""/>
+	<input type="submit" value="submit"/>
+</form>
 
 <div id="confirmDialog" style="display: none">
 	<div class="ui-state-highlight ui-corner-all"

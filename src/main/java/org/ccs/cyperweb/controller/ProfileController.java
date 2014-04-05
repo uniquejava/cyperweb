@@ -79,5 +79,11 @@ public class ProfileController {
 		redirectAttributes.addFlashAttribute("success", "delete success!");
 		return "redirect:/profile";
 	}
+	@RequestMapping(value = "deleteAll")
+	public String deleteAll(@RequestParam(value = "ids") String ids, RedirectAttributes redirectAttributes) {
+		profileService.deleteProfiles(ids);
+		redirectAttributes.addFlashAttribute("success", "batch delete success!");
+		return "redirect:/profile";
+	}
 
 }

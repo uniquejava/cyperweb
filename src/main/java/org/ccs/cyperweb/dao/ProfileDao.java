@@ -16,9 +16,12 @@ public interface ProfileDao {
 	
 	public void deleteProfile(Long id);
 
+	public void deleteProfiles(String ids);
+	
 	public Profile findProfileById(Long id);
 	
 	public Page<Profile> findByPage(Page<Profile> page, List<PropertyFilter> filters);
+
 
 
 }

@@ -2,6 +2,7 @@ package org.ccs.cyperweb.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.ccs.cyperweb.model.Profile;
@@ -42,6 +43,17 @@ public class ProfileDaoImpl implements ProfileDao {
 	public void deleteProfile(Long id) {
 		jdbcTemplate.update("delete from profile where id=?", id);
 	}
+	
+	public void deleteProfiles(String ids) {
+		String[] idArr = ids.split(",");
+		List<Object[]>  params = new ArrayList<Object[]>();
+		for (int i = 0; i < idArr.length; i++) {
+			params.add(new Object[]{Long.valueOf(idArr[i])});
+		}
+		
+		jdbcTemplate.batchUpdate("delete from profile where id=?", params);
+	}
+	
 
 	public Profile findProfileById(Long id) {
 		return jdbcTemplate.queryForObject("select * from profile p where p.id=?", new RowMapper<Profile>(){

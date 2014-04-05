@@ -36,6 +36,11 @@ public class ProfileServiceImpl implements ProfileService {
 		profileDao.deleteProfile(id);
 	}
 	
+	@Transactional
+	public void deleteProfiles(String ids) {
+		profileDao.deleteProfiles(ids);		
+	}
+	
 	public Profile findProfileById(Long id) {
 		return profileDao.findProfileById(id);
 	}

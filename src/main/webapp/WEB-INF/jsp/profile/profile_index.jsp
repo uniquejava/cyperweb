@@ -36,6 +36,17 @@
 	}
 
 	$(document).ready(function() {
+		//select all checkbox
+		$("#btnSelectAll").click(function(){
+			$(".checkbox").attr("checked",this.checked);
+		});
+		//individual checkbox
+		$(".checkbox").click(function(){
+			var notChecked = $(".checkbox:not(:checked").length
+			$("#btnSelectAll").attr("checked",notChecked==0);
+		});
+			
+		//define the profile dialog
 		$("#profile_dialog").dialog({
 			autoOpen : false,
 			modal : true,
@@ -83,6 +94,40 @@
 			$('.ui-button:contains("Save")').hide();
 			return false;
 		});
+		
+		$("#btnDeleteAll").click(function(){
+			var ids = [];
+			$(".checkbox:checked").each(function(){
+				ids.push(this.value);
+			});
+			if(ids.length > 0){
+				showConfirm({
+					message : "Are you sure to delete them?",
+					ok : function() {
+						$("#ids").val(ids.join(","));
+						var form = $("#utilityForm").get(0);
+						form.action="profile/deleteAll";
+						form.submit();
+					}
+				});
+			}else{
+				showInfo({message:"Please select at least one item!"});
+			}
+		});
+		
+		$("#btnModifyAll").click(function(){
+			var ids = [];
+			$(".checkbox:checked").each(function(){
+				ids.push(this.value);
+			});
+			if(ids.length == 1){
+				preUpdate(ids[0]);
+			}else{
+				showInfo({message:"Please select exactly one item!"});
+			}
+		});
+		
+		
 
 	});
 </script>
@@ -121,10 +166,10 @@
 					<button class="btn btn-primary" id="btnCreate">
 						<i class="icon-plus"></i> New
 					</button>
-					<button class="btn btn-danger" >
+					<button class="btn btn-danger" id="btnDeleteAll" >
 						<i class="icon-trash"></i>&nbsp;Delete
 					</button>
-					<button class="btn btn-warning" >
+					<button class="btn btn-warning" id="btnModifyAll">
 						<i class="icon-pencil"></i>&nbsp;Modify
 					</button>
 					<button class="btn">Import</button>
@@ -147,8 +192,7 @@
 					<tbody>
 						<c:forEach items="${page.content }" var="p">
 							<tr>
-								<td nowrap="nowrap"><input id="btnSelectAll"
-									id="checkbox_${p.id }" type="checkbox" /></td>
+								<td nowrap="nowrap"><input value="${p.id }" class="checkbox" type="checkbox" /></td>
 								<td>${p.id }</td>
 								<td>${p.name }</td>
 								<td><a href="javascript:confirmDelete('${p.id}')"><i

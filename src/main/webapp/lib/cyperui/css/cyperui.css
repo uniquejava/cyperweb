@@ -771,7 +771,7 @@ table.table.list tr:first-child td {
 .table {
     border-collapse: separate;
     width: 100%;
-    background: url("images/ui-bg_glass_75_ffffff_1x400.png") repeat-x scroll 50% 50% #FFFFFF;
+    background: url("../images/ui-bg_glass_75_ffffff_1x400.png") repeat-x scroll 50% 50% #FFFFFF;
     border: 1px solid #AAAAAA;
     padding: 4px;
     color: #404040;
