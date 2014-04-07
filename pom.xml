@@ -13,6 +13,10 @@
 			<name>Spring Maven Milestone Repository</name>
 			<url>http://repo.spring.io/milestone</url>
 		</repository>
+		<repository>
+			<id>JBoss Repo</id>
+			<url>http://repository.jboss.com/maven2</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -48,7 +52,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.22</version>
+			<version>5.1.29</version>
 		</dependency>
 
 		<!-- initialize db from file -->
@@ -104,12 +108,32 @@
 		</dependency>
 
 		<!-- jpa -->
-		<dependency>
-			<groupId>org.apache.openjpa</groupId>
-			<artifactId>openjpa</artifactId>
-			<version>2.2.2</version>
-		</dependency>
 
+		<!-- <dependency> -->
+		<!-- <groupId>org.hibernate</groupId> -->
+		<!-- <artifactId>hibernate-entitymanager</artifactId> -->
+		<!-- <version>4.3.4.Final</version> -->
+		<!-- <scope>runtime</scope> -->
+		<!-- </dependency> -->
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.6.0.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.3</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
@@ -128,14 +152,6 @@
 			<artifactId>spring-test</artifactId>
 			<version>${spring.version}</version>
 			<scope>test</scope>
-		</dependency>
-
-		<!-- OpenJPA enhancer, put to tomcat/lib, and add -javaagent:C:/w/servers/tomcat-7.0.42/lib/spring-instrument-3.2.7.RELEASE.jar -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-instrument</artifactId>
-			<version>${spring.version}</version>
-			<scope>provided</scope>
 		</dependency>
 
 		<!-- JSON -->

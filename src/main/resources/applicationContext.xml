@@ -43,7 +43,7 @@
 	</bean>
 
 	<!-- initialize db -->
-	<bean class="org.ccs.cyperweb.init.DbInitializer" init-method="init" />
+	<bean class="org.ccs.cyperweb.init.DbInitializer" init-method="init" lazy-init="false"/>
 
 
 	<!-- Spring JPA -->
@@ -61,15 +61,15 @@
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+		<property name="packagesToScan" value="org.ccs.cyperweb.model" />
 		<property name="jpaVendorAdapter">
-      		<bean class="org.springframework.orm.jpa.vendor.OpenJpaVendorAdapter">
-      			<property name="database" value="MYSQL" />
-      		</bean>
-   		</property>
-		<property name="loadTimeWeaver">
-			<bean
-				class="org.springframework.instrument.classloading.InstrumentationLoadTimeWeaver" />
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+		</property>
+		<property name="jpaProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
 		</property>
 	</bean>
 

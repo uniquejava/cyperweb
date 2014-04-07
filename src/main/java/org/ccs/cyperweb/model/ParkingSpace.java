@@ -3,16 +3,16 @@ package org.ccs.cyperweb.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonManagedReference;
 
 @Entity
 @Table(name = "PARKING_SPACE")
 public class ParkingSpace implements Serializable {
+	@Id
 	private Long id;
 	private String lot;
 	private String location;

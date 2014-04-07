@@ -39,7 +39,7 @@ $cf start cyperweb
 ###Maven
 You can use below command to generate a war package for bluemix.
 ```shell
-mvn clean package
+mvn clean package -DskipTests=true -U
 ```
 the generated file will be `cyperweb.war` for this project. Be careful when you are using maven eclipse plug-in.
 #####a. Don't use below maven archetects in Eclipse JEE, they are meant for RAD.

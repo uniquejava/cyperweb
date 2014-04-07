@@ -2,6 +2,8 @@ package org.ccs.cyperweb.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Id;
+
 /**
  * 
  * @author cyper.yin
@@ -9,6 +11,7 @@ import java.io.Serializable;
  */
 public class Profile implements Serializable {
 	private static final long serialVersionUID = 3951258443839797341L;
+	@Id
 	private Long id;
 	private String name;
 

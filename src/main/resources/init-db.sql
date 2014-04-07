@@ -136,12 +136,8 @@ CREATE TABLE `profile` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
--- ----------------------------
--- Records of profile
--- ----------------------------
-INSERT INTO `profile` VALUES ('2', 'cyper');
 
 -- ----------------------------
 -- Table structure for `project`

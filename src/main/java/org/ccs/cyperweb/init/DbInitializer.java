@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * It's hard for us to create tables on cloud.
@@ -16,7 +18,7 @@ import org.springframework.stereotype.Repository;
  * @author cyper.yin
  * 
  */
-@Repository
+@Service
 public class DbInitializer {
 
 	private static final Log logger = LogFactory.getLog(DbInitializer.class);
@@ -24,6 +26,7 @@ public class DbInitializer {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
+	@Transactional
 	public void init() throws IOException {
 		int count = 0;
 
