@@ -27,28 +27,51 @@ public class ProfileController {
 	private ProfileService profileService;
 
 	@RequestMapping(value = "")
-	public String index(
-			@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex,
-			Model model, 
+	public String index(@RequestParam(value = "pageIndex", defaultValue = "1") Integer pageIndex, Model model,
 			HttpServletRequest request) {
-		
+
 		List<PropertyFilter> filters = JdbcUtils.buildPropertyFilters(request);
-		
-		Page<Profile> page = new Page<Profile>(5);
+
+		Page<Profile> page = new Page<Profile>(10);
 		page.setPageIndex(pageIndex);
-		page = profileService.findByPage(page,filters);
-		
-		
+		page = profileService.findByPage(page, filters);
+
 		model.addAttribute("page", page);
 		return "profile/profile_index";
 	}
-	
-	@RequestMapping(value = "create", method=RequestMethod.POST)
-	public String create(HttpServletRequest request) {
-		String name = request.getParameter("name");
-		profileService.createProfile(new Profile(name));
-		return "redirect:/profile";
+
+	@RequestMapping(value = "create", method = RequestMethod.POST)
+	public void create(HttpServletRequest request, Model model) {
+		try {
+			String name = request.getParameter("name");
+			profileService.createProfile(new Profile(name));
+			model.addAttribute("ok", "true");
+			model.addAttribute("msg", "create success!");
+		} catch (Exception e) {
+			model.addAttribute("ok", "false");
+			model.addAttribute("msg", e.getMessage());
+		}
 	}
+	
+	@RequestMapping("update/{id}")
+	public void update(Model model, @PathVariable("id") Long id) {
+		Profile o = profileService.findProfileById(id);
+		model.addAttribute("o", o);
+	}
+	
+	
+	@RequestMapping(value = "update", method = RequestMethod.POST)
+	public void update(Profile o, Model model) {
+		try {
+			profileService.updateProfile(o);
+			model.addAttribute("ok", "true");
+			model.addAttribute("msg", "update success!");
+		} catch (Exception e) {
+			model.addAttribute("ok", "false");
+			model.addAttribute("msg", e.getMessage());
+		}
+	}
+	
 	
 	@RequestMapping(value = "delete/{id}")
 	public String delete(Model model, @PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
@@ -56,5 +79,11 @@ public class ProfileController {
 		redirectAttributes.addFlashAttribute("success", "delete success!");
 		return "redirect:/profile";
 	}
-	
+	@RequestMapping(value = "deleteAll")
+	public String deleteAll(@RequestParam(value = "ids") String ids, RedirectAttributes redirectAttributes) {
+		profileService.deleteProfiles(ids);
+		redirectAttributes.addFlashAttribute("success", "batch delete success!");
+		return "redirect:/profile";
+	}
+
 }
