@@ -141,25 +141,7 @@ CREATE TABLE `profile` (
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES ('2', 'green');
-INSERT INTO `profile` VALUES ('4', 'dddd');
-INSERT INTO `profile` VALUES ('9', 'ddd');
-INSERT INTO `profile` VALUES ('10', 'sdsd');
-INSERT INTO `profile` VALUES ('12', 'sd');
-INSERT INTO `profile` VALUES ('13', 'sd');
-INSERT INTO `profile` VALUES ('14', 'd');
-INSERT INTO `profile` VALUES ('16', 'test2');
-INSERT INTO `profile` VALUES ('17', 'dddd');
-INSERT INTO `profile` VALUES ('18', 'adad');
-INSERT INTO `profile` VALUES ('21', 'test2');
-INSERT INTO `profile` VALUES ('22', 'dddd');
-INSERT INTO `profile` VALUES ('23', 'adad');
-INSERT INTO `profile` VALUES ('24', 'adad');
-INSERT INTO `profile` VALUES ('25', 'adad');
-INSERT INTO `profile` VALUES ('26', 'test2');
-INSERT INTO `profile` VALUES ('27', 'dddd');
-INSERT INTO `profile` VALUES ('28', 'test2');
-INSERT INTO `profile` VALUES ('29', 'adad');
+INSERT INTO `profile` VALUES ('2', 'cyper');
 
 -- ----------------------------
 -- Table structure for `project`
